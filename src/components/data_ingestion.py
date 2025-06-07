@@ -1,7 +1,7 @@
 import os
 import sys # for logging and exception
 from src.logger import logging
-from srs.exception import CustomException
+from src.exception import CustomException
 
 import  pandas as pd
 import numpy as np
@@ -27,7 +27,7 @@ class DataIngestion:
             df = pd.read_csv(os.path.join('notebooks/data', 'gemstone.csv'))
             logging.info('Dataset read as pandas Dataframe')
 
-            os.mkdirs(os.path.join(self.ingestion_config.raw_data_path), exist_ok = True)
+            os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok = True)
             df.to_csv(self.ingestion_config.raw_data_path, index = False)
             logging.info('Raw Data is created')
 
@@ -38,8 +38,8 @@ class DataIngestion:
             logging.info('Ingestion of Data is Completed')
 
             return (
-                self.ingestion_config.train_path,
-                self.ingestion_config.test_path
+                self.ingestion_config.train_data_path,
+                self.ingestion_config.test_data_path
             )
 
         except Exception as e:
